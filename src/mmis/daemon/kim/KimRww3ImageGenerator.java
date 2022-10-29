@@ -109,7 +109,7 @@ public class KimRww3ImageGenerator extends KimFileGenerator {
 					MarchingSquares marchingSquares = new MarchingSquares();
 				    GeneralPath[] isolines = marchingSquares.mkIsos(values, thresholds); // <== Just this to create isos!
 				    
-				    String imgFileName = "KHOPE_RWW3_" + issuedTmStr + "_" +  variableInfo[1] + "_" + String.format("%02d", t+1) + ".png";
+				    String imgFileName = "KIM_RWW3_" + issuedTmStr + "_" +  variableInfo[1] + "_" + String.format("%02d", t+1) + ".png";
 				    
 					File imageFile = new File(destFilePath + File.separator + imgFileName);
 					
