@@ -14,7 +14,7 @@ public class thcpTest {
 		final String metaDirPath = "F:/data/mmis_sample/meta";
 		final String thcpDirPath = "F:/data/mmis_sample/TCHP/";
 		
-		// KIM CWW3 모델 이미지 테스트
+		// KIM TCHP 모델 이미지 테스트
 		ThcpFileGenerator thcp = new ThcpImageGenerator(metaDirPath);
 		thcp.setTestMode(true);
 		

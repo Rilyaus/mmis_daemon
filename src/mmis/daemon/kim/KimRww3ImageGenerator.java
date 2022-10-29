@@ -74,7 +74,7 @@ public class KimRww3ImageGenerator extends KimFileGenerator {
 			
 			BoundLonLat boundLonLat = this.modelGridUtil.getBoundLonLat();
 			BoundXY boundXY = this.modelGridUtil.getBoundXY();
-		
+			
 			int imgHeight = (int)Math.floor((boundLonLat.getTop() - boundLonLat.getBottom()) * this.imageExpandFactor * this.imageResizeFactor); 		    			
 			int imgWidth = (int)Math.floor((boundLonLat.getRight() - boundLonLat.getLeft()) * this.imageExpandFactor * this.imageResizeFactor);
 			
@@ -100,7 +100,8 @@ public class KimRww3ImageGenerator extends KimFileGenerator {
 					rangeList.add(new Range(modelGridUtil.getModelHeight() - boundXY.getTop() - 1, modelGridUtil.getModelHeight() - boundXY.getBottom() - 1));
 					rangeList.add(new Range(boundXY.getLeft(), boundXY.getRight()));
 					
-					double[][] values = GridCalcUtil.convertVerticalStorageToValues(var.read(rangeList).getStorage(), rows, cols, false);
+					double[][] values = GridCalcUtil.convertVerticalStorageToValues(var.read(rangeList).getStorage(), rows, cols, true);
+					double[][] maskValues = GridCalcUtil.convertVerticalStorageToValues(var.read(rangeList).getStorage(), rows, cols, false);
 						
 					double[] thresholds = kimLegend.getThreshholds();
 					Color[] colors = kimLegend.getColors();
@@ -108,7 +109,7 @@ public class KimRww3ImageGenerator extends KimFileGenerator {
 					MarchingSquares marchingSquares = new MarchingSquares();
 				    GeneralPath[] isolines = marchingSquares.mkIsos(values, thresholds); // <== Just this to create isos!
 				    
-				    String imgFileName = "KIM_RWW3_" + issuedTmStr + "_" +  variableInfo[1] + "_" + String.format("%02d", t+1) + ".png";
+				    String imgFileName = "KHOPE_RWW3_" + issuedTmStr + "_" +  variableInfo[1] + "_" + String.format("%02d", t+1) + ".png";
 				    
 					File imageFile = new File(destFilePath + File.separator + imgFileName);
 					
@@ -131,6 +132,8 @@ public class KimRww3ImageGenerator extends KimFileGenerator {
 	    		    	graphic.fill(isolines[i]);
 	    		    	graphic.draw(isolines[i]);
 	    		    }
+	    		    
+	    		    this.setImageMaskingGrid(this.modelGridUtil, graphic, maskValues, imgWidth, imgHeight, this.imageExpandFactor, this.imageResizeFactor);
 	    			
 	    		    bi = Thumbnails.of(bi).imageType(BufferedImage.TYPE_INT_ARGB).size(imgWidth / imageResizeFactor, imgHeight / imageResizeFactor).asBufferedImage();
 	    			

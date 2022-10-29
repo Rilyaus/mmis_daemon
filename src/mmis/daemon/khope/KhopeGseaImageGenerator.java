@@ -54,7 +54,7 @@ public class KhopeGseaImageGenerator extends KhopeFileGenerator {
 		final List<Map<String, Object>> destFileInfoList = new ArrayList<Map<String, Object>>();
 		
 		final Object[][] variableInfos = new Object[][]{
-			{"temperature", "TW-DIFF", KhopeLegend.Legend.GSEA_TW_DIFF, 75, 15}
+			{"temperature", "TW-DIFF", KhopeLegend.Legend.GSEA_TW_DIFF, 62, 15}
 		};
 		
 		String issuedTmStr = new File(srcFilePath1).getName().split("_")[0];
@@ -80,7 +80,7 @@ public class KhopeGseaImageGenerator extends KhopeFileGenerator {
 				KhopeLegend khopeLegend = KhopeLegend.getLegend((KhopeLegend.Legend)variableInfo[2]);
 				
 				Variable var1 = ncFile1.findVariable((String)variableInfo[0]);
-				Variable var2 = ncFile1.findVariable((String)variableInfo[0]);
+				Variable var2 = ncFile2.findVariable((String)variableInfo[0]);
 				
 				int timeLength = Integer.valueOf(variableInfo[3].toString());
 				int depLength = Integer.valueOf(variableInfo[4].toString());
@@ -99,12 +99,12 @@ public class KhopeGseaImageGenerator extends KhopeFileGenerator {
 						
 						List<Range> rangeList = new ArrayList<Range>();
 						rangeList.add(new Range(t, t));
-						rangeList.add(new Range(0, 0));
+						rangeList.add(new Range(d, d));
 						rangeList.add(new Range(modelGridUtil.getModelHeight() - boundXY.getTop() - 1, modelGridUtil.getModelHeight() - boundXY.getBottom() - 1));
 						rangeList.add(new Range(boundXY.getLeft(), boundXY.getRight()));
 						
-						double[][] values1 = GridCalcUtil.convertStorageToValues(var1.read(rangeList).getStorage(), rows, cols, false);
-						double[][] values2 = GridCalcUtil.convertStorageToValues(var2.read(rangeList).getStorage(), rows, cols, false);
+						double[][] values1 = GridCalcUtil.convertStorageToValues(var1.read(rangeList).getStorage(), rows, cols, true);
+						double[][] values2 = GridCalcUtil.convertStorageToValues(var2.read(rangeList).getStorage(), rows, cols, true);
 						
 						double[][] values = GridCalcUtil.subtractValues(values1, values2);
 						
@@ -184,8 +184,8 @@ public class KhopeGseaImageGenerator extends KhopeFileGenerator {
 		final List<Map<String, Object>> destFileInfoList = new ArrayList<Map<String, Object>>();
 		
 		final Object[][] variableInfos = new Object[][]{
-			{"salt", "SALT", KhopeLegend.Legend.GSEA_SALT, 75, 15},
-			{"temperature", "TEMP", KhopeLegend.Legend.GSEA_TEMP, 75, 15}
+			{"salt", "SALT", KhopeLegend.Legend.GSEA_SALT, 62, 15},
+			{"temperature", "TEMP", KhopeLegend.Legend.GSEA_TEMP, 62, 15}
 		};
 		
 		String issuedTmStr = new File(srcFilePath).getName().split("_")[0];

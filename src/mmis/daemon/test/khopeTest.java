@@ -71,20 +71,20 @@ public class khopeTest {
 //					glosea5ProdfDirPath + File.separator + "prodf_op_sfc_ond_22_20221013_mcur.nc", glosea5ProdfDirPath);
 //		}
 //		
-		// Glosea5 Prodf 모델 Binary 테스트
-		{
-			KhopeFileGenerator glosea5Prodf2 = new Glosea5ProdfBinaryGenerator(metaDirPath);
-			glosea5Prodf2.setTestMode(false);		
-			
-			String[] glosea5ProdfFileList = new String[] {
-				"prodf_op_sfc_ond_22_20221013_zcur.nc",
-				"prodf_op_sfc_ond_22_20221013_mcur.nc"
-			};
-			
-			for(String glosea5ProdfFile : glosea5ProdfFileList) {
-				List<Map<String, Object>> fileInfoList = glosea5Prodf2.generateFile(glosea5ProdfDirPath + File.separator + glosea5ProdfFile, glosea5ProdfDirPath);
-			}
-		}
+//		// Glosea5 Prodf 모델 Binary 테스트
+//		{
+//			KhopeFileGenerator glosea5Prodf2 = new Glosea5ProdfBinaryGenerator(metaDirPath);
+//			glosea5Prodf2.setTestMode(true);		
+//			
+//			String[] glosea5ProdfFileList = new String[] {
+//				"prodf_op_sfc_ond_22_20221013_zcur.nc",
+//				"prodf_op_sfc_ond_22_20221013_mcur.nc"
+//			};
+//			
+//			for(String glosea5ProdfFile : glosea5ProdfFileList) {
+//				List<Map<String, Object>> fileInfoList = glosea5Prodf2.generateFile(glosea5ProdfDirPath + File.separator + glosea5ProdfFile, glosea5ProdfDirPath);
+//			}
+//		}
 //		
 //		// MVIS LDPS 모델 이미지 테스트
 //		{

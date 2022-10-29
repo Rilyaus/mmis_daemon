@@ -5,6 +5,9 @@ public enum DFS_Type {
 	// 기온
 	TMP(-50),
 	
+	// 기온
+	T1H(-50),
+	
 	// 3시간기온
 	T3H(-50),
 

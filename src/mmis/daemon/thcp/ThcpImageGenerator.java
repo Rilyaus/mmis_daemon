@@ -107,7 +107,8 @@ public class ThcpImageGenerator extends ThcpFileGenerator {
 					rangeList.add(new Range(modelGridUtil.getModelHeight() - boundXY.getTop() - 1, modelGridUtil.getModelHeight() - boundXY.getBottom() - 1));
 					rangeList.add(new Range(boundXY.getLeft(), boundXY.getRight()));
 					
-					double[][] values = GridCalcUtil.convertStorageToValues(var.read(rangeList).getStorage(), rows, cols, valueOffset, false);
+					double[][] values = GridCalcUtil.convertStorageToValues(var.read(rangeList).getStorage(), rows, cols, valueOffset, true);
+					double[][] maskValues = GridCalcUtil.convertStorageToValues(var.read(rangeList).getStorage(), rows, cols, valueOffset, false);
 					
 					double[] thresholds = thcpLegend.getThreshholds();
 					Color[] colors = thcpLegend.getColors();
@@ -139,7 +140,7 @@ public class ThcpImageGenerator extends ThcpFileGenerator {
 	    		    	graphic.draw(isolines[i]);
 	    		    }
 	    		    
-	    		    this.setImageMaskingGrid(this.modelGridUtil, graphic, values, imgWidth, imgHeight, this.imageExpandFactor, this.imageResizeFactor);
+	    		    this.setImageMaskingGrid(this.modelGridUtil, graphic, maskValues, imgWidth, imgHeight, this.imageExpandFactor, this.imageResizeFactor);
 	    			
 	    		    bi = Thumbnails.of(bi).imageType(BufferedImage.TYPE_INT_ARGB).size(imgWidth / imageResizeFactor, imgHeight / imageResizeFactor).asBufferedImage();
 	    			

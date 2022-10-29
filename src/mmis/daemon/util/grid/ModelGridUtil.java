@@ -276,11 +276,11 @@ public class ModelGridUtil {
 			
 		} else if(Model.KIM_RWW3.equals(model)) {
 			
-			this.modelWidth = 421;
-			this.modelHeight = 361;
+			this.modelWidth = 1051;
+			this.modelHeight = 901;
 			
-			this.defaultLatInterval = 0.008333;
-			this.defaultLonInterval = 0.008333;
+			this.defaultLatInterval = 0.033333;
+			this.defaultLonInterval = 0.033333;
 	
 			this.byteOrder = ByteOrder.BIG_ENDIAN;
 			

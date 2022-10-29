@@ -119,7 +119,9 @@ public class KhopeGlosea5DayImageGenerator extends KhopeFileGenerator {
 						rangeList.add(new Range(modelGridUtil.getModelHeight() - boundXY.getTop() - 1, modelGridUtil.getModelHeight() - boundXY.getBottom() - 1));
 						rangeList.add(new Range(boundXY.getLeft(), boundXY.getRight()));
 						
-						double[][] regridValues = getRegridData(GridCalcUtil.convertStorageToValues(var.read(rangeList).getStorage(), rows, cols, false));			
+						double[][] regridValues = getRegridData(GridCalcUtil.convertStorageToValues(var.read(rangeList).getStorage(), rows, cols, true));			
+						
+						double[][] regridMaskValues = getRegridData(GridCalcUtil.convertStorageToValues(var.read(rangeList).getStorage(), rows, cols, false));
 						
 						double[] thresholds = khopeLegend.getThreshholds();
 						Color[] colors = khopeLegend.getColors();
@@ -129,7 +131,7 @@ public class KhopeGlosea5DayImageGenerator extends KhopeFileGenerator {
 					    
 					    String imgFileName = "KHOPE_GLOSEA5_DAY_" + issuedTmStr + "_" +  variableInfo[1] + "_" + 
 					    		String.format("%02d", t+1) + (depLength>0?"_"+String.format("%02d", d+1):"") + ".png";
-					    
+					   
 						File imageFile = new File(destFilePath + File.separator + imgFileName);
 						
 						BufferedImage bi = new BufferedImage(imgWidth, imgHeight, BufferedImage.TYPE_INT_ARGB);
@@ -152,7 +154,7 @@ public class KhopeGlosea5DayImageGenerator extends KhopeFileGenerator {
 		    		    	graphic.draw(isolines[i]);
 		    		    }
 		    		    
-		    		    this.setImageMaskingGrid(this.modelRegridUtil, graphic, regridValues, imgWidth, imgHeight, this.imageExpandFactor, this.imageResizeFactor);
+		    		    this.setImageMaskingGrid(this.modelRegridUtil, graphic, regridMaskValues, imgWidth, imgHeight, this.imageExpandFactor, this.imageResizeFactor);
 		    			
 		    		    bi = Thumbnails.of(bi).imageType(BufferedImage.TYPE_INT_ARGB).size(imgWidth / imageResizeFactor, imgHeight / imageResizeFactor).asBufferedImage();
 		    			

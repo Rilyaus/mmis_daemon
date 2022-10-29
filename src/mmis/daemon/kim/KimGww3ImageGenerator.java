@@ -43,7 +43,7 @@ public class KimGww3ImageGenerator extends KimFileGenerator {
 	@Override
 	public boolean initCoordinates() {
 		
-		this.modelGridUtil = new ModelGridUtil(ModelGridUtil.Model.KIM_GWW3, ModelGridUtil.Position.TOP_LEFT, this.kimLatFilePath, this.kimLonFilePath);
+		this.modelGridUtil = new ModelGridUtil(ModelGridUtil.Model.KIM_GWW3, ModelGridUtil.Position.TOP_LEFT, this.kimLatFilePath, this.kimLonFilePath, 180);
 		
 		return true;
 	}
@@ -73,12 +73,12 @@ public class KimGww3ImageGenerator extends KimFileGenerator {
 		try {
 			
 			NetcdfDataset ncFile = NetcdfDataset.acquireDataset(srcFilePath, null);
-			
-			this.modelGridUtil.setMultipleGridBoundInfoforLatLonGrid(new double[]{80, -80, 0, 360});
+		
+			this.modelGridUtil.setMultipleGridBoundInfoforLatLonGrid(new double[]{80, -80, -180, 180});
 			
 			BoundLonLat boundLonLat = this.modelGridUtil.getBoundLonLat();
 			BoundXY boundXY = this.modelGridUtil.getBoundXY();
-		
+			
 			int imgHeight = (int)Math.floor((boundLonLat.getTop() - boundLonLat.getBottom()) * this.imageExpandFactor * this.imageResizeFactor); 		    			
 			int imgWidth = (int)Math.floor((boundLonLat.getRight() - boundLonLat.getLeft()) * this.imageExpandFactor * this.imageResizeFactor);
 			
@@ -109,8 +109,10 @@ public class KimGww3ImageGenerator extends KimFileGenerator {
 					rangeList.add(new Range(modelGridUtil.getModelHeight() - boundXY.getTop() - 1, modelGridUtil.getModelHeight() - boundXY.getBottom() - 1));
 					rangeList.add(new Range(boundXY.getLeft(), boundXY.getRight()));
 					
-					double[][] values = GridCalcUtil.convertVerticalStorageToValues(var.read(rangeList).getStorage(), rows, cols, true);
-					double[][] maskValues = GridCalcUtil.convertVerticalStorageToValues(var.read(rangeList).getStorage(), rows, cols, false);
+					float[] storage = this.swapLongitudeLine((float[])var.read(rangeList).getStorage());
+					
+					double[][] values = GridCalcUtil.convertVerticalStorageToValues(storage, rows, cols, true);
+					double[][] maskValues = GridCalcUtil.convertVerticalStorageToValues(storage, rows, cols, false);
 					
 					double[] thresholds = kimLegend.getThreshholds();
 					Color[] colors = kimLegend.getColors();
@@ -177,5 +179,32 @@ public class KimGww3ImageGenerator extends KimFileGenerator {
 		System.out.println("-> End Create Image [File Count= " + destFileInfoList.size() + "]");
 		
 		return destFileInfoList;
+	}
+	
+	private float[] swapLongitudeLine(float[] storage) {
+		
+		float[] _storage = new float[storage.length];
+		
+		int modelHeight = this.modelGridUtil.getModelHeight();
+		int modelWidth = this.modelGridUtil.getModelWidth();
+		
+		for(int i=0 ; i<modelHeight ; i++) {
+			
+			for(int j=0 ; j<modelWidth ; j++) {
+			
+				float v = storage[i*modelWidth + j];
+				
+				// 180도선 이하에 있는 값을 밀어준다
+				if(j < modelWidth / 2) {					
+					_storage[i*modelWidth + j + modelWidth / 2] = v;
+					
+				// 180도선 이상의 값을 앞으로 땡긴다
+				} else {
+					_storage[i*modelWidth + j - modelWidth / 2] = v;
+				}
+			}
+		}
+		
+		return _storage;
 	}
 }

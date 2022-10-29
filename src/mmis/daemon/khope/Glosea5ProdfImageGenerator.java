@@ -72,7 +72,7 @@ public class Glosea5ProdfImageGenerator extends KhopeFileGenerator {
 			
 			BoundLonLat boundLonLat = this.modelGridUtil.getBoundLonLat();
 			BoundXY boundXY = this.modelGridUtil.getBoundXY();
-		
+
 			int imgHeight = (int)Math.floor((boundLonLat.getTop() - boundLonLat.getBottom()) * this.imageExpandFactor * this.imageResizeFactor); 		    			
 			int imgWidth = (int)Math.floor((boundLonLat.getRight() - boundLonLat.getLeft()) * this.imageExpandFactor * this.imageResizeFactor);
 			

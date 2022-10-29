@@ -215,7 +215,7 @@ public class GridCalcUtil {
     		values[y][x] = -999;
     	}
     }
-	
+		
 	static public void setNearestGridValue(double[][] values, Object storage, int rows, int cols, int y, int x, double offset) {
     	
     	// i, j 위치의 값이 NaN 일 경우 인접한 NaN 값이 아닌 격자의 값을 복제한다

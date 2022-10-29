@@ -5,6 +5,7 @@ import java.awt.Color;
 public class ThcpLegend {
 	
 	public enum Legend {
+		
 		HEAT
 	}
 

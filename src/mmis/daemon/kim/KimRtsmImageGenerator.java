@@ -78,7 +78,7 @@ public class KimRtsmImageGenerator extends KimFileGenerator {
 			
 			BoundLonLat boundLonLat = this.modelGridUtil.getBoundLonLat();
 			BoundXY boundXY = this.modelGridUtil.getBoundXY();
-		
+			
 			int imgHeight = (int)Math.floor((boundLonLat.getTop() - boundLonLat.getBottom()) * this.imageExpandFactor * this.imageResizeFactor); 		    			
 			int imgWidth = (int)Math.floor((boundLonLat.getRight() - boundLonLat.getLeft()) * this.imageExpandFactor * this.imageResizeFactor);
 			
@@ -90,7 +90,7 @@ public class KimRtsmImageGenerator extends KimFileGenerator {
 				KimLegend kimLegend = KimLegend.getLegend((KimLegend.Legend)variableInfo[2]);
 				
 				Variable var1 = ncFile1.findVariable((String)variableInfo[0]);
-				Variable var2 = ncFile1.findVariable((String)variableInfo[0]);
+				Variable var2 = ncFile2.findVariable((String)variableInfo[0]);
 				
 				Calendar cal = new GregorianCalendar();
 				cal.setTime(issuedTmFormat.parse(issuedTmStr));

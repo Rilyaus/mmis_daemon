@@ -124,7 +124,9 @@ public class KhopeGlosea5SunImageGenerator extends KhopeFileGenerator {
 						rangeList.add(new Range(shiftTop + modelGridUtil.getModelHeight() - boundXY.getTop() - 1, shiftTop + modelGridUtil.getModelHeight() - boundXY.getBottom() - 1));
 						rangeList.add(new Range(shiftLeft + boundXY.getLeft(), shiftLeft + boundXY.getRight()));
 						
-						double[][] regridValues = getRegridData(GridCalcUtil.convertStorageToValues(var.read(rangeList).getStorage(), rows, cols, false));			
+						double[][] regridValues = getRegridData(GridCalcUtil.convertStorageToValues(var.read(rangeList).getStorage(), rows, cols, true));			
+						
+						double[][] regridMaskValues = getRegridData(GridCalcUtil.convertStorageToValues(var.read(rangeList).getStorage(), rows, cols, false));
 						
 						double[] thresholds = khopeLegend.getThreshholds();
 						Color[] colors = khopeLegend.getColors();
@@ -157,7 +159,7 @@ public class KhopeGlosea5SunImageGenerator extends KhopeFileGenerator {
 		    		    	graphic.draw(isolines[i]);
 		    		    }
 		    		    
-		    		    this.setImageMaskingGrid(this.modelRegridUtil, graphic, regridValues, imgWidth, imgHeight, this.imageExpandFactor, this.imageResizeFactor);
+		    		    this.setImageMaskingGrid(this.modelRegridUtil, graphic, regridMaskValues, imgWidth, imgHeight, this.imageExpandFactor, this.imageResizeFactor);
 		    			
 		    		    bi = Thumbnails.of(bi).imageType(BufferedImage.TYPE_INT_ARGB).size(imgWidth / imageResizeFactor, imgHeight / imageResizeFactor).asBufferedImage();
 		    			
